@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Sets the document to HTML5 standard -->
+    <meta charset="UTF-8"> <!-- Defines UTF-8 encoding to support special characters -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the page responsive on mobile devices -->
+    <title>Uber-Style Price Calculator</title> <!-- Title displayed on the browser tab -->
+
+    <!-- Inline styles to keep everything in one file -->
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif; /* Default font */
+            margin: 0; /* Removes external margins */
+            padding: 0; /* Removes internal padding */
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333; /* Text color */
+            display: flex; /* Enables flexbox layout */
+            flex-direction: column; /* Arranges items vertically */
+            align-items: center; /* Centers items horizontally */
+            justify-content: center; /* Centers items vertically */
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        /* Styling for the main title */
+        h1 {
+            color: #444; /* Title text color */
+        }
+
+        /* Styling for the form */
+        form {
+            background: #fff; /* White background */
+            padding: 20px; /* Internal spacing */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for emphasis */
+        }
+
+        /* Styling for labels */
+        label {
+            display: block; /* Makes each label take up a full line */
+            margin-bottom: 10px; /* Spacing below the label */
+        }
+
+        /* Styling for input fields */
+        input {
+            width: 100%; /* Full width of the container */
+            padding: 10px; /* Internal spacing */
+            margin-bottom: 15px; /* Spacing below the input */
+            border: 1px solid #ddd; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        /* Styling for the button */
+        button {
+            width: 100%; /* Full width of the container */
+            padding: 10px; /* Internal spacing */
+            background-color: #007BFF; /* Blue background */
+            color: #fff; /* White text */
+            border: none; /* Removes default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        /* Hover effect for the button */
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Styling for the result section */
+        .result {
+            margin-top: 20px; /* Spacing above */
+            font-size: 1.2em; /* Larger font for emphasis */
+        }
+    </style>
+</head>
+<body>
+    <!-- Page title -->
+    <h1>Uber-Style Price Calculator</h1>
+
+    <!-- Form where the user inputs data -->
+    <form id="uberForm">
+        <!-- Input field for distance -->
+        <label for="distance">Distance (km):</label>
+        <input type="number" id="distance" min="0" step="0.1" placeholder="E.g., 10" required> 
+        <!-- Configured to accept only numbers (including decimals), minimum value is 0 -->
+
+        <!-- Input field for time -->
+        <label for="time">Time (min):</label>
+        <input type="number" id="time" min="0" step="1" placeholder="E.g., 15" required> 
+        <!-- Configured to accept only integer numbers, minimum value is 0 -->
+
+        <!-- Button to calculate -->
+        <button type="submit">Calculate Price</button>
+    </form>
+
+    <!-- Section where the result will be displayed -->
+    <div class="result" id="result"></div>
+
+    <!-- JavaScript script -->
+    <script>
+        // Adds an event listener to the form, triggered on submission
+        document.getElementById('uberForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevents the default form submission behavior
+
+            // Retrieves values from input fields
+            const distance = parseFloat(document.getElementById('distance').value); // Distance entered
+            const time = parseFloat(document.getElementById('time').value); // Time entered
+
+            // Fixed values for the calculation
+            const baseFare = 5.00; // Fixed base fare
+            const costPerKm = 2.00; // Cost per kilometer
+            const costPerMinute = 0.50; // Cost per minute
+
+            // Formula to calculate the final price
+            const price = baseFare + (distance * costPerKm) + (time * costPerMinute);
+
+            // Displays the price in the result section
+            const resultElement = document.getElementById('result'); // Selects the result element
+            resultElement.textContent = `Estimated trip price: $${price.toFixed(2)}`; 
+            // Formats the result to two decimal places
+        });
+    </script>
+</body>
+</html>
