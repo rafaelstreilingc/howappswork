@@ -1,124 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Sets the document to HTML5 standard -->
-    <meta charset="UTF-8"> <!-- Defines UTF-8 encoding to support special characters -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the page responsive on mobile devices -->
-    <title>Uber-Style Price Calculator</title> <!-- Title displayed on the browser tab -->
-
-    <!-- Inline styles to keep everything in one file -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Price Calculator</title>
     <style>
-        /* General body styling */
         body {
-            font-family: Arial, sans-serif; /* Default font */
-            margin: 0; /* Removes external margins */
-            padding: 0; /* Removes internal padding */
-            background-color: #f4f4f4; /* Light gray background */
-            color: #333; /* Text color */
-            display: flex; /* Enables flexbox layout */
-            flex-direction: column; /* Arranges items vertically */
-            align-items: center; /* Centers items horizontally */
-            justify-content: center; /* Centers items vertically */
-            height: 100vh; /* Full height of the viewport */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
         }
-
-        /* Styling for the main title */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
         h1 {
-            color: #444; /* Title text color */
+            text-align: center;
+            color: #333;
         }
-
-        /* Styling for the form */
-        form {
-            background: #fff; /* White background */
-            padding: 20px; /* Internal spacing */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for emphasis */
+        label, input, button {
+            width: 100%;
+            margin-bottom: 10px;
         }
-
-        /* Styling for labels */
-        label {
-            display: block; /* Makes each label take up a full line */
-            margin-bottom: 10px; /* Spacing below the label */
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
-        /* Styling for input fields */
-        input {
-            width: 100%; /* Full width of the container */
-            padding: 10px; /* Internal spacing */
-            margin-bottom: 15px; /* Spacing below the input */
-            border: 1px solid #ddd; /* Light gray border */
-            border-radius: 5px; /* Rounded corners */
-        }
-
-        /* Styling for the button */
         button {
-            width: 100%; /* Full width of the container */
-            padding: 10px; /* Internal spacing */
-            background-color: #007BFF; /* Blue background */
-            color: #fff; /* White text */
-            border: none; /* Removes default border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer cursor on hover */
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
         }
-
-        /* Hover effect for the button */
         button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
-
-        /* Styling for the result section */
         .result {
-            margin-top: 20px; /* Spacing above */
-            font-size: 1.2em; /* Larger font for emphasis */
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Page title -->
-    <h1>Uber-Style Price Calculator</h1>
 
-    <!-- Form where the user inputs data -->
-    <form id="uberForm">
-        <!-- Input field for distance -->
+    <div class="container">
+        <h1>Uber Price Calculator</h1>
         <label for="distance">Distance (km):</label>
-        <input type="number" id="distance" min="0" step="0.1" placeholder="E.g., 10" required> 
-        <!-- Configured to accept only numbers (including decimals), minimum value is 0 -->
+        <input type="number" id="distance" placeholder="Enter distance in km" required>
 
-        <!-- Input field for time -->
-        <label for="time">Time (min):</label>
-        <input type="number" id="time" min="0" step="1" placeholder="E.g., 15" required> 
-        <!-- Configured to accept only integer numbers, minimum value is 0 -->
+        <label for="time">Time (minutes):</label>
+        <input type="number" id="time" placeholder="Enter time in minutes" required>
 
-        <!-- Button to calculate -->
-        <button type="submit">Calculate Price</button>
-    </form>
+        <label for="surge">Surge Pricing Factor:</label>
+        <select id="surge">
+            <option value="1">Normal</option>
+            <option value="1.5">Surge (1.5x)</option>
+            <option value="2">Surge (2x)</option>
+            <option value="3">Extreme Surge (3x)</option>
+        </select>
 
-    <!-- Section where the result will be displayed -->
-    <div class="result" id="result"></div>
+        <button onclick="calculatePrice()">Calculate Price</button>
 
-    <!-- JavaScript script -->
+        <div class="result" id="result"></div>
+    </div>
+
     <script>
-        // Adds an event listener to the form, triggered on submission
-        document.getElementById('uberForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevents the default form submission behavior
+        function calculatePrice() {
+            // Get user inputs
+            const distance = parseFloat(document.getElementById('distance').value);
+            const time = parseFloat(document.getElementById('time').value);
+            const surge = parseFloat(document.getElementById('surge').value);
 
-            // Retrieves values from input fields
-            const distance = parseFloat(document.getElementById('distance').value); // Distance entered
-            const time = parseFloat(document.getElementById('time').value); // Time entered
+            // Check for valid inputs
+            if (isNaN(distance) || isNaN(time) || distance <= 0 || time <= 0) {
+                document.getElementById('result').innerText = "Please enter valid values for distance and time.";
+                return;
+            }
 
-            // Fixed values for the calculation
-            const baseFare = 5.00; // Fixed base fare
+            // Base fares and rates
+            const baseFare = 5.00; // Base fare for the ride
             const costPerKm = 2.00; // Cost per kilometer
-            const costPerMinute = 0.50; // Cost per minute
+            const costPerMinute = 0.50; // Cost per minute of travel
+            const waitTimeCost = 0.30; // Cost per minute of waiting (idle time)
 
-            // Formula to calculate the final price
-            const price = baseFare + (distance * costPerKm) + (time * costPerMinute);
+            // Simulating waiting time (just for a fun effect)
+            const waitingTime = Math.random() * 10; // Random waiting time between 0 and 10 minutes
 
-            // Displays the price in the result section
-            const resultElement = document.getElementById('result'); // Selects the result element
-            resultElement.textContent = `Estimated trip price: $${price.toFixed(2)}`; 
-            // Formats the result to two decimal places
-        });
+            // Calculate the price
+            const price = (baseFare + (distance * costPerKm) + (time * costPerMinute) + (waitingTime * waitTimeCost)) * surge;
+
+            // Show the result
+            document.getElementById('result').innerText = `Estimated price: $${price.toFixed(2)} (Including Surge Pricing)`;
+        }
     </script>
+
 </body>
 </html>
