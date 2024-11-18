@@ -9,7 +9,7 @@ Por que estamos fazendo isso? Porque nem todo mundo quer mergulhar num mar de c�
 
 > *“Menos é mais, exceto quando é o preço da corrida no horário de pico.”* - Um sábio programador. 😌  
 
-**Aviso**: Este código é para iniciantes! Não estamos criando um aplicativo complexo, apenas entendendo os fundamentos e a lógica simples por trás do cálculo de preços.  
+**Aviso**: Este código é para iniciantes! **Foque mais no código e como ele funciona**, especialmente na parte de **JavaScript**. Este projeto é uma versão bem simples, só pra entender como a função de cálculo funciona. Não estamos criando um aplicativo complexo, apenas explorando o básico.
 
 ---
 
@@ -24,4 +24,4 @@ Why are we doing this? Because not everyone wants to dive into a sea of advanced
 
 > *“Less is more, unless it’s surge pricing.”* - A wise programmer. 😌  
 
-**Note**: This code is for beginners! We're not creating a complex app, just understanding the basics and simple logic behind price calculations.  
+**Note**: This code is for beginners! **Focus more on the code and how it works**, especially the **JavaScript** part. This project is a super simplified version, just to help you understand how the price calculation function works. We’re not building a complex app, just exploring the basics.
