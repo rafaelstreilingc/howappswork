@@ -9,6 +9,8 @@ Por que estamos fazendo isso? Porque nem todo mundo quer mergulhar num mar de c�
 
 > *“Menos é mais, exceto quando é o preço da corrida no horário de pico.”* - Um sábio programador. 😌  
 
+**Aviso**: Este código é para iniciantes! Não estamos criando um aplicativo complexo, apenas entendendo os fundamentos e a lógica simples por trás do cálculo de preços.  
+
 ---
 
 ## 🇬🇧 **How Do Apps Work?**
@@ -21,3 +23,5 @@ Right now, we’re exploring **how Uber calculates the price of a ride**. Heads 
 Why are we doing this? Because not everyone wants to dive into a sea of advanced code just to build something straightforward. Our mission is to learn, understand the concepts, and maybe even have a bit of fun along the way.  
 
 > *“Less is more, unless it’s surge pricing.”* - A wise programmer. 😌  
+
+**Note**: This code is for beginners! We're not creating a complex app, just understanding the basics and simple logic behind price calculations.  
