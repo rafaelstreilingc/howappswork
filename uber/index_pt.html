@@ -1,124 +1,108 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <!-- Configura o padrão do documento como HTML5 -->
-    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 para suportar acentos e caracteres especiais -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Permite que o site seja responsivo em dispositivos móveis -->
-    <title>Calculadora de Preço - Estilo Uber</title> <!-- Título que aparece na aba do navegador -->
-
-    <!-- Estilo interno para manter tudo em um único arquivo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preço - Uber</title>
     <style>
-        /* Estilo geral do corpo da página */
         body {
-            font-family: Arial, sans-serif; /* Fonte padrão */
-            margin: 0; /* Remove margens externas */
-            padding: 0; /* Remove espaçamentos internos */
-            background-color: #f4f4f4; /* Fundo cinza claro */
-            color: #333; /* Cor do texto */
-            display: flex; /* Define o layout como flexbox */
-            flex-direction: column; /* Os elementos são organizados verticalmente */
-            align-items: center; /* Centraliza os itens no eixo horizontal */
-            justify-content: center; /* Centraliza os itens no eixo vertical */
-            height: 100vh; /* Define a altura como 100% da janela de visualização */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
         }
-
-        /* Estilo do título principal */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
         h1 {
-            color: #444; /* Cor do texto do título */
+            text-align: center;
+            color: #333;
         }
-
-        /* Estilo do formulário */
-        form {
-            background: #fff; /* Fundo branco */
-            padding: 20px; /* Espaçamento interno */
-            border-radius: 10px; /* Bordas arredondadas */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+        label, input, button {
+            width: 100%;
+            margin-bottom: 10px;
         }
-
-        /* Estilo dos rótulos */
-        label {
-            display: block; /* Cada rótulo ocupa uma linha */
-            margin-bottom: 10px; /* Espaçamento abaixo do rótulo */
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
-        /* Estilo dos campos de entrada */
-        input {
-            width: 100%; /* Largura total do contêiner */
-            padding: 10px; /* Espaçamento interno */
-            margin-bottom: 15px; /* Espaçamento abaixo do campo */
-            border: 1px solid #ddd; /* Borda fina cinza */
-            border-radius: 5px; /* Bordas arredondadas */
-        }
-
-        /* Estilo do botão */
         button {
-            width: 100%; /* Largura total do contêiner */
-            padding: 10px; /* Espaçamento interno */
-            background-color: #007BFF; /* Cor azul */
-            color: #fff; /* Texto branco */
-            border: none; /* Remove a borda padrão */
-            border-radius: 5px; /* Bordas arredondadas */
-            cursor: pointer; /* Mostra o ícone de mão ao passar o mouse */
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
         }
-
-        /* Efeito ao passar o mouse no botão */
         button:hover {
-            background-color: #0056b3; /* Azul mais escuro no hover */
+            background-color: #0056b3;
         }
-
-        /* Estilo da seção de resultado */
-        .result {
-            margin-top: 20px; /* Espaçamento acima */
-            font-size: 1.2em; /* Tamanho maior para destacar */
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Título da página -->
-    <h1>Calculadora de Preço - Estilo Uber</h1>
 
-    <!-- Formulário onde o usuário insere os dados -->
-    <form id="uberForm">
-        <!-- Campo para inserir a distância -->
-        <label for="distance">Distância (km):</label>
-        <input type="number" id="distance" min="0" step="0.1" placeholder="Ex: 10" required> 
-        <!-- Campo configurado para aceitar apenas números (com valores decimais), mínimo de 0 -->
+    <div class="container">
+        <h1>Calculadora de Preço - Uber</h1>
+        <label for="distancia">Distância (km):</label>
+        <input type="number" id="distancia" placeholder="Digite a distância em km" required>
 
-        <!-- Campo para inserir o tempo -->
-        <label for="time">Tempo (min):</label>
-        <input type="number" id="time" min="0" step="1" placeholder="Ex: 15" required> 
-        <!-- Campo configurado para aceitar números inteiros, mínimo de 0 -->
+        <label for="tempo">Tempo (minutos):</label>
+        <input type="number" id="tempo" placeholder="Digite o tempo em minutos" required>
 
-        <!-- Botão para calcular -->
-        <button type="submit">Calcular Preço</button>
-    </form>
+        <label for="surge">Fator de Surge Pricing:</label>
+        <select id="surge">
+            <option value="1">Normal</option>
+            <option value="1.5">Surge (1.5x)</option>
+            <option value="2">Surge (2x)</option>
+            <option value="3">Surge Extremo (3x)</option>
+        </select>
 
-    <!-- Área onde o resultado será exibido -->
-    <div class="result" id="result"></div>
+        <button onclick="calcularPreco()">Calcular Preço</button>
 
-    <!-- Script JavaScript -->
+        <div class="resultado" id="resultado"></div>
+    </div>
+
     <script>
-        // Adiciona um ouvinte de eventos ao formulário, ativado ao enviar
-        document.getElementById('uberForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Previne o comportamento padrão de envio do formulário
+        function calcularPreco() {
+            // Pega os valores inseridos pelo usuário
+            const distancia = parseFloat(document.getElementById('distancia').value);
+            const tempo = parseFloat(document.getElementById('tempo').value);
+            const surge = parseFloat(document.getElementById('surge').value);
 
-            // Captura os valores dos campos de entrada
-            const distance = parseFloat(document.getElementById('distance').value); // Distância inserida
-            const time = parseFloat(document.getElementById('time').value); // Tempo inserido
+            // Valida se os valores inseridos são válidos
+            if (isNaN(distancia) || isNaN(tempo) || distancia <= 0 || tempo <= 0) {
+                document.getElementById('resultado').innerText = "Por favor, insira valores válidos para distância e tempo.";
+                return;
+            }
 
-            // Valores fixos para o cálculo
-            const baseFare = 5.00; // Tarifa base fixa
-            const costPerKm = 2.00; // Custo por quilômetro
-            const costPerMinute = 0.50; // Custo por minuto
+            // Tarifas base e valores por unidade
+            const tarifaBase = 5.00; // Tarifa base para a corrida
+            const custoPorKm = 2.00; // Custo por quilômetro
+            const custoPorMinuto = 0.50; // Custo por minuto de viagem
+            const custoPorEsperar = 0.30; // Custo por minuto de espera (tempo ocioso)
 
-            // Fórmula para calcular o preço final
-            const price = baseFare + (distance * costPerKm) + (time * costPerMinute);
+            // Simula o tempo de espera (apenas para efeito divertido)
+            const tempoEspera = Math.random() * 10; // Tempo de espera aleatório entre 0 e 10 minutos
 
-            // Exibe o preço na área de resultado
-            const resultElement = document.getElementById('result'); // Seleciona o elemento de resultado
-            resultElement.textContent = `Preço estimado da viagem: R$ ${price.toFixed(2)}`; 
-            // Exibe o resultado formatado com duas casas decimais
-        });
+            // Calcula o preço total
+            const preco = (tarifaBase + (distancia * custoPorKm) + (tempo * custoPorMinuto) + (tempoEspera * custoPorEsperar)) * surge;
+
+            // Exibe o resultado
+            document.getElementById('resultado').innerText = `Preço estimado: R$ ${preco.toFixed(2)} (Incluindo Surge Pricing)`;
+        }
     </script>
+
 </body>
 </html>
