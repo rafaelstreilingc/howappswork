@@ -1,4 +1,4 @@
-🇧🇷 **Como os Apps Funcionam?**
+# 🇧🇷 **Como os Apps Funcionam?**
 
 Bem-vindo ao **Como os Apps Funcionam?**, um projeto onde a gente explora o lado básico (e muitas vezes misterioso) de como os aplicativos realmente funcionam. Nossa abordagem? Só usamos a gloriosa *Santíssima Trindade da Programação*: **HTML, CSS e JavaScript**. Nada de firulas, só o básico pra você finalmente entender o que acontece nos bastidores.  
 
@@ -11,7 +11,7 @@ Por que fazemos isso? Porque nem todo mundo quer começar escalando o Everest da
 
 ---
 
-🇬🇧 **How Do Apps Work?**
+# 🇬🇧 **How Do Apps Work?**
 
 Welcome to **How Do Apps Work?**, a project where we explore the basics (and often mysterious) workings of apps. Our approach? We only use the holy *Programming Trinity*: **HTML, CSS, and JavaScript**. No frills, just the essentials to help you finally get what’s happening behind the scenes.  
 
