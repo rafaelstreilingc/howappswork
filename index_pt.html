@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Configura o padrão do documento como HTML5 -->
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 para suportar acentos e caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Permite que o site seja responsivo em dispositivos móveis -->
+    <title>Calculadora de Preço - Estilo Uber</title> <!-- Título que aparece na aba do navegador -->
+
+    <!-- Estilo interno para manter tudo em um único arquivo -->
+    <style>
+        /* Estilo geral do corpo da página */
+        body {
+            font-family: Arial, sans-serif; /* Fonte padrão */
+            margin: 0; /* Remove margens externas */
+            padding: 0; /* Remove espaçamentos internos */
+            background-color: #f4f4f4; /* Fundo cinza claro */
+            color: #333; /* Cor do texto */
+            display: flex; /* Define o layout como flexbox */
+            flex-direction: column; /* Os elementos são organizados verticalmente */
+            align-items: center; /* Centraliza os itens no eixo horizontal */
+            justify-content: center; /* Centraliza os itens no eixo vertical */
+            height: 100vh; /* Define a altura como 100% da janela de visualização */
+        }
+
+        /* Estilo do título principal */
+        h1 {
+            color: #444; /* Cor do texto do título */
+        }
+
+        /* Estilo do formulário */
+        form {
+            background: #fff; /* Fundo branco */
+            padding: 20px; /* Espaçamento interno */
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+        }
+
+        /* Estilo dos rótulos */
+        label {
+            display: block; /* Cada rótulo ocupa uma linha */
+            margin-bottom: 10px; /* Espaçamento abaixo do rótulo */
+        }
+
+        /* Estilo dos campos de entrada */
+        input {
+            width: 100%; /* Largura total do contêiner */
+            padding: 10px; /* Espaçamento interno */
+            margin-bottom: 15px; /* Espaçamento abaixo do campo */
+            border: 1px solid #ddd; /* Borda fina cinza */
+            border-radius: 5px; /* Bordas arredondadas */
+        }
+
+        /* Estilo do botão */
+        button {
+            width: 100%; /* Largura total do contêiner */
+            padding: 10px; /* Espaçamento interno */
+            background-color: #007BFF; /* Cor azul */
+            color: #fff; /* Texto branco */
+            border: none; /* Remove a borda padrão */
+            border-radius: 5px; /* Bordas arredondadas */
+            cursor: pointer; /* Mostra o ícone de mão ao passar o mouse */
+        }
+
+        /* Efeito ao passar o mouse no botão */
+        button:hover {
+            background-color: #0056b3; /* Azul mais escuro no hover */
+        }
+
+        /* Estilo da seção de resultado */
+        .result {
+            margin-top: 20px; /* Espaçamento acima */
+            font-size: 1.2em; /* Tamanho maior para destacar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Título da página -->
+    <h1>Calculadora de Preço - Estilo Uber</h1>
+
+    <!-- Formulário onde o usuário insere os dados -->
+    <form id="uberForm">
+        <!-- Campo para inserir a distância -->
+        <label for="distance">Distância (km):</label>
+        <input type="number" id="distance" min="0" step="0.1" placeholder="Ex: 10" required> 
+        <!-- Campo configurado para aceitar apenas números (com valores decimais), mínimo de 0 -->
+
+        <!-- Campo para inserir o tempo -->
+        <label for="time">Tempo (min):</label>
+        <input type="number" id="time" min="0" step="1" placeholder="Ex: 15" required> 
+        <!-- Campo configurado para aceitar números inteiros, mínimo de 0 -->
+
+        <!-- Botão para calcular -->
+        <button type="submit">Calcular Preço</button>
+    </form>
+
+    <!-- Área onde o resultado será exibido -->
+    <div class="result" id="result"></div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Adiciona um ouvinte de eventos ao formulário, ativado ao enviar
+        document.getElementById('uberForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Previne o comportamento padrão de envio do formulário
+
+            // Captura os valores dos campos de entrada
+            const distance = parseFloat(document.getElementById('distance').value); // Distância inserida
+            const time = parseFloat(document.getElementById('time').value); // Tempo inserido
+
+            // Valores fixos para o cálculo
+            const baseFare = 5.00; // Tarifa base fixa
+            const costPerKm = 2.00; // Custo por quilômetro
+            const costPerMinute = 0.50; // Custo por minuto
+
+            // Fórmula para calcular o preço final
+            const price = baseFare + (distance * costPerKm) + (time * costPerMinute);
+
+            // Exibe o preço na área de resultado
+            const resultElement = document.getElementById('result'); // Seleciona o elemento de resultado
+            resultElement.textContent = `Preço estimado da viagem: R$ ${price.toFixed(2)}`; 
+            // Exibe o resultado formatado com duas casas decimais
+        });
+    </script>
+</body>
+</html>
